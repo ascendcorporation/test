@@ -1,0 +1,293 @@
+
+<html manifest="test.appcache">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+
+</head>
+
+<body>
+<h1>FBA</h1>
+Search FBA inventory:
+<input id='txtFBA'><br/>
+
+Search FBM inventory:
+<input id='txtFBM'><br/>
+
+Search 90-day order:
+<input id='txt90Day'></input><br/>
+
+Received inventory:
+<input id='txtSKU'></input><br/>
+
+Order transaction:
+<input id='txtOrderId'></input><br/>
+
+Inventory events:
+<input id='txtSKU2'></input><br/>
+
+Reimbursement:
+<input id='txtSKU3'></input><br/>
+
+Customer return:
+<input id='txtSKU4'></input><br/>
+
+Inventory Adjustment:
+<input id='txtSKU5'></input><br/>
+
+Daily inventory:
+<input id='txtSKU6'></input><br/>
+
+
+ODP sku,ZIP:<input id='txtSKUZip'><br/>
+
+
+
+
+ODP sku: 
+<select id="SKUList">
+<option>etm1170	6030213</option>
+<option>etm2170	8610313</option>
+<option>etm3170	6601993</option>
+<option>dymo57313	532831</option>
+<option>envy7855	649870</option>
+<option>ptd600	141981</option>
+<option>mf743cdw	4948297</option>
+option>MFCL8900	447513</option>
+<option>wf7840	9937984</option>
+<option>wf7820	9886355</option>
+<option>mfcj5845	8915810</option>
+<option>mfcj6545	6909489</option>
+<option>hll6200dw	204276</option>
+<option>twin	356076</option>
+<option>mf644	5627636</option>
+<option>mfcl3770	6129456</options>
+<option>ptd400	141747</option>
+<option>turbo 934857</option>
+<option>hp7740	 903378</option>
+<option>9025e	6415152</option>
+<option>hll3270cdw	4981958</option>
+<option>hll3290cdw	 8833938</option>
+<option>hll2395dw	957941</option>
+<option>mfcl5850dw	456699</option>
+<option>pc301	610615</option>
+<option></option>
+<option></option>
+
+</select>
+, zip:
+<select id="Zip" >
+<option>metairie 	70119</option>
+<option>gonzalez	70810</option>
+<option>lafayett	70503</option>
+<option>covington	70458</option>
+<option>arlington 76015</option>
+<option>denton 76205</option>
+<option>longview 75605</option>
+<option>beaumont 77701</option>
+<option>alexandria 71301</option>
+<option></option>
+<option>Atlanta 30305</option>
+<option>Cumming 30040</option>
+<option>Marietta 30060</option>
+<option>Newnan 30265</option>
+<option>Athens 30606</option>
+<option>Macon 31206</option>
+<option>dalton/cha 30720</option>
+<option>alcoa 37701</option>
+<option>morristown 37813</option>
+<option>greenville/anderson 29605</option>
+<option>asheville 28805</option>
+<option>kingsport/johnson 37660</option>
+<option>birmingham 35210</option>
+<option>tuscaloosa 35405</option>
+<option>huntsville 35801</option>
+<option>griffin 30223</option>
+<option>columbus-ga 31904</option>
+<option>augusta 30809</option>
+<option>loganville 30052</option>
+<option>Columbia 29223</option>
+<option>Charlotte 28208</option>
+<option>nashville 37214</option>
+<option>memphis 38138</option>
+<option>tullahuma 37388</option>
+<option>cookeville 38501</option>
+<option>morristown 37813</option>
+<option>kingsport/johnson 37660</option>
+</select>
+<button onclick="OdpLookup()">Go</button>
+
+<button onclick="window.open('ascend/default.aspx','','height=500,width=500')">Configure</button>
+<script>
+var inputx = document.getElementById("txtSKUZip");
+inputx.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   var s = inputx.value;
+   var sku = s.substring(0, s.indexOf(" "));
+   var zip = s.substring(s.indexOf(" ")+1);
+   event.preventDefault();
+   //var URL = "https://www.officedepot.com/mb/stores/availability.do?sku=960296++&fromLocalBrowse=false&zipCityState=30328&city=&zip=30328&state=";
+   var URL = "https://www.officedepot.com/mb/stores/availability.do?sku=" + sku + "++&zipCityState=" + zip +"&city=&zip=" + zip + "&state=";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+function OdpLookup() {
+  var skuList = document.getElementById("SKUList");
+  var sku =skuList.options[skuList.selectedIndex].text;
+  sku = sku.split(" ")[1];
+  var zipList = document.getElementById("Zip");
+  var zip = zipList.options[zipList.selectedIndex].text;
+  zip = zip.split(" ")[1];
+  var URL= "https://www.officedepot.com/mb/stores/availability.do?sku=" + sku + "++&zipCityState=" + zip +"&city=&zip=" + zip + "&state=";
+  var win = window.open(URL, "_blank", "");
+}
+
+
+
+
+
+//FBM inventory - new
+
+var input0 = document.getElementById("txtFBM");
+input0.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input0.value;
+   var URL = "https://sellercentral.amazon.com/myinventory/inventory?fulfilledBy=all&page=1&pageSize=10&searchField=all&searchTerm=" + text +"&sort=sales_desc&status=all";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//FBA inventory -new 
+var input1 = document.getElementById("txtFBA");
+input1.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input1.value;
+   var URL = "https://sellercentral.amazon.com/myinventory/inventory?fulfilledBy=all&page=1&pageSize=10&searchField=all&searchTerm=" + text +"&sort=sales_desc&status=all";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+
+/*FBM inventory old
+var input0 = document.getElementById("txtFBM");
+input0.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input0.value;
+   var URL = "https://sellercentral.amazon.com/inventory/ref=xx_invmgr_dnav_xx?tbla_myitable=sort:%7B%22sortOrder%22%3A%22DESCENDING%22%2C%22sortedColumnId%22%3A%22date%22%7D;search:" +  text +";pagination:1;";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//FBA inventory old
+var input1 = document.getElementById("txtFBA");
+input1.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input1.value;
+   var URL = "https://sellercentral.amazon.com/hz/inventory/view/FBAKNIGHTS/ref=xx_fbamnginv_dnav_xx?tbla_myitable=sort:%7B%22sortOrder%22%3A%22DESCENDING%22%7D;search:"+ text +";pagination:1;";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+*/
+
+//180 day orders
+input2 = document.getElementById("txt90Day");
+input2.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input2.value;
+   var URL = "https://sellercentral.amazon.com/orders-v3/search?sort=status_desc&page=1&date-range=last-180&q=" + text + "&qt=product-name";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//received inventory
+input3 = document.getElementById("txtSKU");
+input3.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input3.value;
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/search.html#orderAscending=&recordType=INVENTORY_RECEIPT&noResultType=&merchantSku=" + text +"&fnSku=&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjustmentReasonGroup=&eventDateOption=90&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&eventMonthOption=1&fromMonth=1&fromYear=2019&toMonth=1&toYear=2019&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2019";
+   var URL = "https://sellercentral.amazon.com/gp/ssof/reports/searchv2.html#orderAscending=&recordType=INVENTORY_RECEIPT&noResultType=&inventoryAdjustmentReasonGroup=&merchantSku=" + text + "&fnSku=&skuType=merchantSku&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjReasonGroups=Damaged&inventoryAdjReasonGroups=Destroyed&inventoryAdjReasonGroups=Found&inventoryAdjReasonGroups=Lost&inventoryAdjReasonGroups=Other&eventDateOption=365&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2020&toMonth=1&toYear=2020&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2020";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//order transaction
+input4 = document.getElementById("txtOrderId");
+input4.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input4.value;
+   var URL = "https://sellercentral.amazon.com/gp/payments-account/view-transactions.html?orderId=" + text + "&view=search";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//inventory events
+input5 = document.getElementById("txtSKU2");
+input5.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input5.value;
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/search.html#orderAscending=&recordType=INVENTORY_EVENT_DETAIL&noResultType=&merchantSku=" + text + "&fnSku=&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjustmentReasonGroup=&eventDateOption=90&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2019&toMonth=1&toYear=2019&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2019";
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/searchv2.html#orderAscending=&recordType=INVENTORY_EVENT_DETAIL&noResultType=&inventoryAdjustmentReasonGroup=&merchantSku=" + text + "&fnSku=&skuType=merchantSku&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjReasonGroups=Damaged&inventoryAdjReasonGroups=Destroyed&inventoryAdjReasonGroups=Found&inventoryAdjReasonGroups=Lost&inventoryAdjReasonGroups=Other&eventDateOption=365&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2020&toMonth=1&toYear=2020&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2020";
+   var URL = "https://sellercentral.amazon.com/reportcentral/LEDGER_REPORT/0/%7B%22filters%22:[%22%22,%22" + text + "%22,%22%22,%22DAILY%22,%22FC%22,%2284700%22,%22%22,%22%22,%22%22,%22%22,%22%22],%22pageOffset%22:1,%22searchDays%22:90%7D";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//reimbursement by SKU
+input6 = document.getElementById("txtSKU3");
+input6.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input6.value;
+      var URL = "https://sellercentral.amazon.com/reportcentral/REIMBURSEMENTS/0/%7B%22filters%22:[%22" + text + "%22,%22%22,%22%22,%22%22],%22pageOffset%22:1,%22searchDays%22:365%7D";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//return by SKU
+input7 = document.getElementById("txtSKU4");
+input7.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input7.value;
+   
+   var URL = "https://sellercentral.amazon.com/reportcentral/CUSTOMER_RETURNS/0/%7B%22filters%22:[%22" + input7.value + "%22,%22%22,%22%22,%22%22,%22%22],%22pageOffset%22:1,%22searchDays%22:365%7D";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+//inventory adjustment
+input8 = document.getElementById("txtSKU5");
+input8.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input8.value;
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/search.html#orderAscending=&recordType=REIMBURSEMENTS&noResultType=&merchantSku=" + text + "&fnSku=&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjustmentReasonGroup=&eventDateOption=180&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2019&toMonth=1&toYear=2019&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2019";
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/searchv2.html#orderAscending=&recordType=INVENTORY_ADJUSTMENT&noResultType=&inventoryAdjustmentReasonGroup=Damaged%2CDestroyed%2CFound%2CLost%2COther&merchantSku=" + text + "&fnSku=&skuType=merchantSku&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&inventoryAdjReasonGroups=Damaged&inventoryAdjReasonGroups=Destroyed&inventoryAdjReasonGroups=Found&inventoryAdjReasonGroups=Lost&inventoryAdjReasonGroups=Other&eventDateOption=365&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2020&toMonth=1&toYear=2020&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2020";
+   var URL = "https://sellercentral.amazon.com/reportcentral/INVENTORY_ADJUSTMENT/0/%7B%22filters%22:[%22" + text + "%22,%22%22,%22%22,%22%22,[%22Damaged%22,%22Destroyed%22,%22Found%22,%22Lost%22,%22Other%22]],%22pageOffset%22:1,%22searchDays%22:90%7D";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+
+//daily inventory
+input9 = document.getElementById("txtSKU6");
+input9.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var text = input9.value;
+   //var URL = "https://sellercentral.amazon.com/gp/ssof/reports/search.html#orderAscending=&recordType=INVENTORY_SNAPSHOT&noResultType=&inventoryAdjustmentReasonGroup=&merchantSku=" + text + "&fnSku=&skuType=merchantSku&FnSkuXORMSku=&reimbursementId=&orderId=&genericOrderId=&asin=&lpn=&shipmentId=&problemType=ALL_DEFECT_TYPES&hazmatStatus=&inventoryEventTransactionType=&fulfillmentCenterId=&transactionItemId=&eventDateOption=90&fromDate=mm%2Fdd%2Fyyyy&toDate=mm%2Fdd%2Fyyyy&startDate=&endDate=&fromMonth=1&fromYear=2019&toMonth=1&toYear=2019&startMonth=&startYear=&endMonth=&endYear=&specificMonth=1&specificYear=2019";
+   var URL = "https://sellercentral.amazon.com/reportcentral/INVENTORY_SNAPSHOT/0/%7B%22filters%22:[%22" + text + "%22,%22%22],%22pageOffset%22:1,%22searchDays%22:365%7D";
+   var win = window.open(URL, "_blank", "");
+  }
+});
+
+</script>
+</body>
+</html>
