@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrollable ListView with 20 Rows Visible</title>
+    <title>Scrollable ListView with Custom Column Widths</title>
     <style>
         /* Container for scrollable table */
         .table-container {
@@ -24,6 +24,18 @@
         th {
             background-color: #f4f4f4;
         }
+
+        /* Custom column widths */
+        th:nth-child(1), td:nth-child(1) {
+            width: 50px;  /* First column (e.g., Store Name) */
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 200px;  /* Second column (e.g., Location) */
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 50px;  /* Third column (e.g., Contact) */
+        }
+        /* Add more columns and adjust width as needed */
     </style>
 </head>
 <body>
