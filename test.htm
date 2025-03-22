@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic TSV ListView with Scroll</title>
+    <title>Scrollable ListView with 20 Rows Visible</title>
     <style>
         /* Container for scrollable table */
         .table-container {
-            max-height: 400px; /* Height to show 20 rows */
+            height: 400px; /* Fixed height to show only 20 rows */
             overflow-y: auto;  /* Adds vertical scroll */
             width: 100%;
         }
@@ -59,12 +59,8 @@
                 const headers = rows[0].split("\t");
                 tableHead.innerHTML = headers.map(header => `<th>${header}</th>`).join("");
 
-                // Only show 20 rows
-                const maxRows = 20;
-                const rowsToShow = rows.slice(1, maxRows + 1); // Skip header, limit to 20 rows
-
-                // Process and append each row
-                rowsToShow.forEach(row => {
+                // Process all rows (skip the first header row)
+                rows.slice(1).forEach(row => {
                     const cols = row.split("\t");
                     let tr = document.createElement("tr");
                     tr.innerHTML = cols.map(col => `<td>${col}</td>`).join("");
