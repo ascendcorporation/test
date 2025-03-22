@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic TSV ListView</title>
+    <title>Dynamic TSV ListView with Scroll</title>
     <style>
+        /* Container for scrollable table */
+        .table-container {
+            max-height: 400px; /* Height to show 20 rows */
+            overflow-y: auto;  /* Adds vertical scroll */
+            width: 100%;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -22,13 +29,17 @@
 <body>
 
     <h2>Dynamic Stores List</h2>
-    <table id="listView">
-        <thead>
-            <tr id="tableHead"></tr>
-        </thead>
-        <tbody id="tableBody">
-        </tbody>
-    </table>
+
+    <!-- Scrollable Table Container -->
+    <div class="table-container">
+        <table id="listView">
+            <thead>
+                <tr id="tableHead"></tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
 
     <script>
         async function loadTSV() {
@@ -48,8 +59,12 @@
                 const headers = rows[0].split("\t");
                 tableHead.innerHTML = headers.map(header => `<th>${header}</th>`).join("");
 
-                // Process and append each row (skip headers)
-                rows.slice(1).forEach(row => {
+                // Only show 20 rows
+                const maxRows = 20;
+                const rowsToShow = rows.slice(1, maxRows + 1); // Skip header, limit to 20 rows
+
+                // Process and append each row
+                rowsToShow.forEach(row => {
                     const cols = row.split("\t");
                     let tr = document.createElement("tr");
                     tr.innerHTML = cols.map(col => `<td>${col}</td>`).join("");
