@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load CSV Data into ListView</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Stores List</h2>
+    <table id="listView">
+        <thead>
+            <tr>
+                <th>storeno</th>
+                <th>city</th>
+                <th>zip</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        async function loadCSV() {
+            try {
+                // Fetch the CSV file
+                const response = await fetch("stores.txt");
+                const csvText = await response.text();
+
+                // Split lines
+                const rows = csvText.trim().split("\n");
+                const tableBody = document.querySelector("#listView tbody");
+
+                // Process each row (skip first row if it's headers)
+                rows.slice(1).forEach(row => {
+                    const cols = row.split(",");
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${cols[0]}</td><td>${cols[1]}</td><td>${cols[2]}</td>`;
+                    tableBody.appendChild(tr);
+                });
+
+            } catch (error) {
+                console.error("Error loading CSV:", error);
+            }
+        }
+
+        // Call function to load CSV data
+        loadCSV();
+    </script>
+
+</body>
+</html>
