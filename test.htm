@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Load Tab-Delimited Data into ListView</title>
+    <title>Dynamic TSV ListView</title>
     <style>
         table {
             width: 100%;
@@ -21,16 +21,12 @@
 </head>
 <body>
 
-    <h2>Stores List</h2>
+    <h2>Dynamic Stores List</h2>
     <table id="listView">
         <thead>
-            <tr>
-                <th>Store Name</th>
-                <th>Location</th>
-                <th>Revenue</th>
-            </tr>
+            <tr id="tableHead"></tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
         </tbody>
     </table>
 
@@ -43,13 +39,20 @@
 
                 // Split into rows
                 const rows = tsvText.trim().split("\n");
-                const tableBody = document.querySelector("#listView tbody");
 
-                // Process each row (skip first row if it's headers)
+                // Get table elements
+                const tableHead = document.querySelector("#tableHead");
+                const tableBody = document.querySelector("#tableBody");
+
+                // Extract column names from first row
+                const headers = rows[0].split("\t");
+                tableHead.innerHTML = headers.map(header => `<th>${header}</th>`).join("");
+
+                // Process and append each row (skip headers)
                 rows.slice(1).forEach(row => {
-                    const cols = row.split("\t"); // Split using tab
+                    const cols = row.split("\t");
                     let tr = document.createElement("tr");
-                    tr.innerHTML = `<td>${cols[0]}</td><td>${cols[1]}</td><td>${cols[2]}</td>`;
+                    tr.innerHTML = cols.map(col => `<td>${col}</td>`).join("");
                     tableBody.appendChild(tr);
                 });
 
